@@ -52,16 +52,21 @@ public class Main {
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(System.in);
+            System.out.println("Исходный и заменяющий алфавиты:");
+            System.out.println(initialAlphabet);
+            System.out.println(endAlphabet);
             System.out.println("Зашифровать сообщение - введите 1\n" +
                     "Расшифровать сообщение - введите 2");
             int numInput = Integer.parseInt(sc.nextLine());
-            System.out.println("Введите сообщение");
-            String input = sc.nextLine();
 
             if (numInput == 1) {
+                System.out.println("Введите сообщение");
+                String input = sc.nextLine();
                 System.out.println("Криптограмма: " + encryption(input));
 
             } else if (numInput == 2) {
+                System.out.println("Введите сообщение");
+                String input = sc.nextLine();
                 System.out.println("Расшифровка: " + decryption(input));
             } else {
                 System.out.println("invalid input");
