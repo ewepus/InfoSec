@@ -21,39 +21,53 @@ public class Main {
             {endAlphabet20, endAlphabet21, endAlphabet22}
     };
 
-    public static String encryption(String input) {
+    public static String encryption(String input, int[] contourLengths) {
         String cryptogram = "";
-        int counterX = 0, counterY = 0;
+        int i = 0, counter = 0;
 
-        for (int i = 0; i < input.length(); i++) {
-            if (counterX == 3) {
-                counterX = 0;
-                counterY++;
+        while (i < input.length()) {
+            for (int contourIndex = 0; contourIndex < contourLengths.length; contourIndex++) {
+                counter = counter > 3 ? 0 : counter;
+                int contourLength = contourLengths[contourIndex];
+                for (int length = 0; length < contourLength; length++) {
+                    if (i >= input.length()) {
+                        break;
+                    }
+                    int indexString = initialAlphabet.indexOf(input.charAt(i));
+                    cryptogram += endAlphabets[contourIndex][counter % 3].charAt(indexString);
+                    i++;
+                    counter++;
+                }
+                if (i >= input.length()) {
+                    break;
+                }
             }
-            counterY = counterY == 3 ? 0 : counterY;
-            int indexString = initialAlphabet.indexOf(input.charAt(i));
-            cryptogram += endAlphabets[counterY][counterX].charAt(indexString);
-            counterX++;
         }
-
         return cryptogram;
     }
 
-    public static String decryption(String input) {
+    public static String decryption(String input, int[] contourLengths) {
         String transcrypt = "";
-        int counterX = 0, counterY = 0;
+        int i = 0, counter = 0;
 
-        for (int i = 0; i < input.length(); i++) {
-            if (counterX == 3) {
-                counterX = 0;
-                counterY++;
+        while (i < input.length()) {
+            for (int contourIndex = 0; contourIndex < contourLengths.length; contourIndex++) {
+                counter = counter > 3 ? 0 : counter;
+                int contourLength = contourLengths[contourIndex];
+                for (int length = 0; length < contourLength; length++) {
+                    if (i >= input.length()) {
+                        break;
+                    }
+                    int indexString = endAlphabets[contourIndex][counter % 3].indexOf(input.charAt(i));
+                    transcrypt += initialAlphabet.charAt(indexString);
+                    i++;
+                    counter++;
+                }
+                if (i >= input.length()) {
+                    break;
+                }
             }
-            counterY = counterY == 3 ? 0 : counterY;
-            int indexString = endAlphabets[counterY][counterX].indexOf(input.charAt(i));
-            transcrypt += initialAlphabet.charAt(indexString);
-            counterX++;
         }
-
         return transcrypt;
     }
 
@@ -77,12 +91,28 @@ public class Main {
             if (numInput == 1) {
                 System.out.println("Введите сообщение");
                 String input = sc.nextLine();
-                System.out.println("Криптограмма: " + encryption(input));
+
+                System.out.println("Введите период применения для каждого отдельного контура\n" +
+                        "(натуральными числами, через enter)");
+                int contour1 = sc.nextInt();
+                int contour2 = sc.nextInt();
+                int contour3 = sc.nextInt();
+                int[] contourLengths = new int[]{contour1, contour2, contour3};
+
+                System.out.println("Криптограмма: " + encryption(input, contourLengths));
 
             } else if (numInput == 2) {
                 System.out.println("Введите сообщение");
                 String input = sc.nextLine();
-                System.out.println("Расшифровка: " + decryption(input));
+
+                System.out.println("Введите период применения для каждого отдельного контура\n" +
+                        "(натуральными числами, через enter)");
+                int contour1 = sc.nextInt();
+                int contour2 = sc.nextInt();
+                int contour3 = sc.nextInt();
+                int[] contourLengths = new int[]{contour1, contour2, contour3};
+
+                System.out.println("Расшифровка: " + decryption(input, contourLengths));
             } else {
                 System.out.println("invalid input");
             }
