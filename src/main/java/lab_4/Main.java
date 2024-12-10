@@ -101,7 +101,6 @@ public class Main {
                 while (!validKey(key)) {
                     System.out.println("Недопустимый ключ, попробуйте ещё раз");
                     key = sc.nextLine();
-                    validKey(key);
                 }
 
                 System.out.println("Расшифровка: " + decryption(input, key));
