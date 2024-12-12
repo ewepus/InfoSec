@@ -82,8 +82,8 @@ public class RC4 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("1. Зашифровать");
-            System.out.println("2. Расшифровать");
+            System.out.println("1. Зашифровать текст");
+            System.out.println("2. Расшифровать текст");
             System.out.println("3. Зашифровать файл");
             System.out.println("4. Расшифровать файл");
             System.out.println("5. Выход");
