@@ -8,7 +8,7 @@ public class RC4 {
     private static final String initialAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-–_=+[]{}<>\\|;:'\",./?`~ ";
 
     public static int[] KSA(byte[] key) {
-        int[] S = new int[initialAlphabet.length()];
+        int[] S = new int[256];
         for (int i = 0; i < S.length; i++) {
             S[i] = i;
         }
