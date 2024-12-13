@@ -7,14 +7,14 @@ public class RC4 {
 
     private static final String initialAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-–_=+[]{}<>\\|;:'\",./?`~ ";
 
-    public static int[] KSA(byte[] key) {
-        int[] S = new int[256];
+    public static int[] KSA(int[] key) {
+        int[] S = new int[initialAlphabet.length()];
         for (int i = 0; i < S.length; i++) {
             S[i] = i;
         }
         int j = 0;
         for (int i = 0; i < S.length; i++) {
-            j = (j + S[i] + (key[i % key.length] & 0xFF)) % S.length;
+            j = (j + S[i] + (key[i % key.length])) % S.length;
             int temp = S[i];
             S[i] = S[j];
             S[j] = temp;
@@ -43,9 +43,14 @@ public class RC4 {
         };
     }
 
-    public static String encryption(byte[] key, String input) {
+    public static String encryption(String key, String input) {
+        int[] keyIndexes = new int[key.length()];
+        for (int i = 0; i < keyIndexes.length; i++) {
+            keyIndexes[i] = initialAlphabet.indexOf(key.charAt(i));
+        }
+
         StringBuilder cryptogram = new StringBuilder();
-        int[] S = KSA(key);
+        int[] S = KSA(keyIndexes);
         Iterator<Integer> keyStream = PRGA(S);
 
         for (char character : input.toCharArray()) {
@@ -61,9 +66,13 @@ public class RC4 {
         return cryptogram.toString();
     }
 
-    public static String decryption(byte[] key, String input) {
+    public static String decryption(String key, String input) {
+        int[] keyIndexes = new int[key.length()];
+        for (int i = 0; i < keyIndexes.length; i++) {
+            keyIndexes[i] = initialAlphabet.indexOf(key.charAt(i));
+        }
         StringBuilder transcrypt = new StringBuilder();
-        int[] S = KSA(key);
+        int[] S = KSA(keyIndexes);
         Iterator<Integer> keyStream = PRGA(S);
 
         for (char character : input.toCharArray()) {
@@ -96,7 +105,7 @@ public class RC4 {
                 System.out.println("Введите ключ");
                 String key = scanner.nextLine();
 
-                System.out.println("Криптограмма: " + encryption(key.getBytes(), input));
+                System.out.println("Криптограмма: " + encryption(key, input));
             } else if (choice.equals("2")) {
                 System.out.println("Введите текст для расшифровки");
                 String input = scanner.nextLine();
@@ -104,7 +113,7 @@ public class RC4 {
                 System.out.println("Введите ключ");
                 String key = scanner.nextLine();
 
-                System.out.println("Расшифровка: " + decryption(key.getBytes(), input));
+                System.out.println("Расшифровка: " + decryption(key, input));
             } else if (choice.equals("3")) {
                 System.out.println("Введите название файла, который нужно зашифровать");
                 String inputFileName = scanner.nextLine();
@@ -119,7 +128,7 @@ public class RC4 {
                      BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        writer.write(encryption(key.getBytes(), line));
+                        writer.write(encryption(key, line));
                         writer.newLine();
                     }
                     System.out.println("Файл успешно зашифрован");
@@ -140,7 +149,7 @@ public class RC4 {
                      BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        writer.write(decryption(key.getBytes(), line));
+                        writer.write(decryption(key, line));
                         writer.newLine();
                     }
                     System.out.println("Файл успешно расшифрован");
