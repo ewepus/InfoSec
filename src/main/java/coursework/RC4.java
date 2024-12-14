@@ -5,7 +5,9 @@ import java.util.*;
 
 public class RC4 {
 
-    private static final String initialAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-–_=+[]{}<>\\|;:'\",./?`~ ";
+    private static final String initialAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
+            "!?@#$%^& *+-=_()[]{}<>\\|/:;'\".,`~";
 
     public static int[] KSA(int[] key) {
         int[] S = new int[initialAlphabet.length()];
